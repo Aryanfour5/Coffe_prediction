@@ -17,6 +17,7 @@ export const MLModel: React.FC = () => {
   const [forecastYear, setForecastYear] = useState('');
   const [prediction, setPrediction] = useState<any | null>(null);
   const [forecastResults, setForecastResults] = useState<any | null>(null);
+  const [story, setStory] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,6 +56,18 @@ export const MLModel: React.FC = () => {
       if (forecastRes.data.status === 'success') {
         setForecastResults(forecastRes.data.forecast);
       }
+
+      const storyRes = await axios.post('https://coffe-prediction.onrender.com/predict/story', {
+        label: classificationRes.data.label,
+        confidence: classificationRes.data.confidence,
+        regressionValue: regressionRes.data.predictedValue,
+        forecast: forecastRes.data.forecast || [],
+      });
+
+      if (storyRes.data.status === 'success') {
+        setStory(storyRes.data.story);
+      }
+
     } catch (error) {
       console.error('Prediction failed:', error);
     } finally {
@@ -139,9 +152,6 @@ export const MLModel: React.FC = () => {
                   Classification Label: <span className="font-bold">{prediction.label}</span>
                 </p>
                 <p>
-                  Predicted Value: <span className="font-bold">{prediction.predictedValue}</span>
-                </p>
-                <p>
                   Confidence:{' '}
                   <span className="font-bold">
                     {prediction.confidence ? `${(prediction.confidence * 100).toFixed(1)}%` : 'N/A'}
@@ -182,6 +192,22 @@ export const MLModel: React.FC = () => {
                   </p>
                 ))}
               </div>
+            </motion.div>
+          )}
+
+          {/* Storytelling Display */}
+          {story && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-8 p-6 bg-yellow-100 dark:bg-yellow-800 rounded-xl shadow-sm"
+            >
+              <h3 className="text-xl font-semibold text-yellow-800 dark:text-white mb-4">
+                📖 Storytelling Summary
+              </h3>
+              <p className="text-yellow-900 dark:text-yellow-100 whitespace-pre-line leading-relaxed">
+                {story}
+              </p>
             </motion.div>
           )}
         </motion.div>
