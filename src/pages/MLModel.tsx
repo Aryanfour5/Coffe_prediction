@@ -25,21 +25,21 @@ export const MLModel: React.FC = () => {
     const timestamp = new Date().toISOString();
 
     try {
-      const classificationRes = await axios.post('http://127.0.0.1:5000/predict/classification', {
+      const classificationRes = await axios.post('https://coffe-prediction.onrender.com/predict/classification', {
         temperature: inputs.temperature,
         year: inputs.year,
         country_encoded: inputs.country_encoded,
         attribute_encoded: inputs.attribute_encoded,
       });
 
-      const regressionRes = await axios.post('http://127.0.0.1:5000/predict/regression', {
+      const regressionRes = await axios.post('https://coffe-prediction.onrender.com/predict/regression', {
         temperature: inputs.temperature,
         year: inputs.year,
         country_encoded: inputs.country_encoded,
         attribute_encoded: inputs.attribute_encoded,
       });
 
-      const forecastRes = await axios.post('http://127.0.0.1:5000/predict/forecast', {
+      const forecastRes = await axios.post('https://coffe-prediction.onrender.com/predict/forecast', {
         years: [parseInt(forecastYear)],
       });
 
