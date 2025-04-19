@@ -4,7 +4,7 @@ import { Navbar } from '../components/Layout/Navbar';
 
 export const PowerBIDashboard: React.FC = () => {
   // Replace with your actual PowerBI embed URL
-  const embedUrl = "https://app.powerbi.com/reportEmbed?reportId=b208264d-ad72-4378-8c51-37868bfe0a06&autoAuth=true&ctid=23035d1f-133c-44b5-b2ad-b3aef17baaa1";
+  const embedUrl = "https://app.powerbi.com/reportEmbed?reportId=06998b64-5fc0-4857-8a66-f32f4e5ae363&autoAuth=true&ctid=23035d1f-133c-44b5-b2ad-b3aef17baaa1";
 
   return (
     <div
